@@ -74,10 +74,20 @@ WSGI_APPLICATION = 'djangosurvey.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+if 'DJANGOUSER_MYSQL_PASSWORD' not in os.environ:
+    raise RuntimeError(
+        "Expected environment variable DJANGOUSER_MYSQL_PASSWORD. Run "
+        "`export DJANGOUSER_MYSQL_PASSWORD=REPLACE-WITH-REAL_PASSWORD`."
+    )
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'djangosurvey',
+        'USER': 'djangouser',
+        'PASSWORD': os.environ['DJANGOUSER_MYSQL_PASSWORD'],
+        'HOST': 'localhost',  # Or an IP Address that your DB is hosted on
+        'PORT': '3306',  # Default MySQL port
     }
 }
 

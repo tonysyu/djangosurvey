@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 {% load bootstrap3 %}
+{% load i18n lazysignup_tags %}
+{% load static %}
 
 <html>
     <head>
         <title>{{ site_title|default:"Django App" }}</title>
-
+        <link rel="stylesheet" type="text/css"
+              href="{% static 'polls/style.css' %}" />
         <!--JQuery is required by Bootstrap-->
-        <script
-          src="https://code.jquery.com/jquery-3.1.1.min.js"
-          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-          crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+                integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+                crossorigin="anonymous"></script>
         {% bootstrap_css %}
         {% bootstrap_javascript %}
     </head>
@@ -27,5 +29,15 @@
                 </div>
             </div>
         </div>
+
+        <footer class="footer navbar-fixed-bottom">
+            <div class="container">
+                <p class="text-muted">
+                    Logged in as
+                    {% if user|is_lazy_user %} Guest: {% endif %}
+                    {{user.username}}
+                </p>
+            </div>
+        </footer>
     </body>
 </html>

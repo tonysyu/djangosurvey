@@ -1,3 +1,4 @@
 django
 django-admin-bootstrapped
+django-bootstrap3
 mysqlclient

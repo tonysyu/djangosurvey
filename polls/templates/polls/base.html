@@ -1,8 +1,11 @@
 <!DOCTYPE html>
+{% load bootstrap3 %}
+
 <html>
     <head>
         <title>{{ site_title|default:"Django App" }}</title>
-        {% include 'polls/bootstrap.html' %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
     </head>
     <body>
         {% block navigation %}

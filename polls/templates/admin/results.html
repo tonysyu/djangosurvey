@@ -1,0 +1,13 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}List of books by publisher{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <h1>Survey Results</h1>
+    {% regroup survey_results by question as results_by_question %}
+    {% for question in results_by_question %}
+    <h3>{{ question.grouper }}</h3>
+    {% endfor %}
+</div>
+{% endblock %}

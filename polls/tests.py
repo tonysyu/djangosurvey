@@ -27,65 +27,45 @@ class QuestionViewTests(TestCase):
     def test_index_view_with_a_past_question(self):
         create_question("Past question.", time_from_now(days=-30))
         response = self._get_polls_response()
-        self.assertQuerysetEqual(
-            response.context['latest_question_list'],
-            ['<Question: Past question.>']
+        self.assertEqual(
+            repr(response.context['question']),
+            '<Question: Past question.>'
         )
 
     def test_index_view_with_two_past_questions(self):
         create_question("Older question.", time_from_now(days=-30))
         create_question("Recent question.", time_from_now(days=-5))
         response = self._get_polls_response()
-        self.assertQuerysetEqual(
-            response.context['latest_question_list'],
-            ['<Question: Recent question.>', '<Question: Older question.>']
+        self.assertIn(
+            repr(response.context['question']),
+            ['<Question: Older question.>', '<Question: Recent question.>']
         )
 
     def test_index_view_with_no_questions(self):
         response = self.client.get(urls.reverse('polls:index'))
         self.assertEqual(response.status_code, 200)
         response = self._get_polls_response()
-        self._assert_no_latest_questions(response)
+        self._assert_no_question(response)
 
     def test_index_view_with_a_future_question(self):
         create_question("Future question.", time_from_now(days=30))
         response = self._get_polls_response()
-        self._assert_no_latest_questions(response)
+        self._assert_no_question(response)
 
     def test_index_view_with_future_and_past_question(self):
         create_question("Past question.", time_from_now(days=-30))
         create_question("Future question.", time_from_now(days=30))
         response = self._get_polls_response()
-        self.assertQuerysetEqual(
-            response.context['latest_question_list'],
-            ['<Question: Past question.>']
+        self.assertEqual(
+            repr(response.context['question']),
+            '<Question: Past question.>'
         )
 
-    def _assert_no_latest_questions(self, response):
+    def _assert_no_question(self, response):
         self.assertContains(response, "No polls are available.")
-        self.assertQuerysetEqual(response.context['latest_question_list'], [])
 
     def _get_polls_response(self):
         return self.client.get(urls.reverse('polls:index'))
-
-
-class QuestionDetailViewTests(TestCase):
-
-    def test_detail_view_with_a_future_question(self):
-        future_question = create_question("Future question.",
-                                          publish_date=time_from_now(days=5))
-        response = self._get_detail_view_response(future_question.id)
-        self.assertEqual(response.status_code, 404)
-
-    def test_detail_view_with_a_past_question(self):
-        past_question = create_question("Past question.",
-                                        publish_date=time_from_now(days=-5))
-        response = self._get_detail_view_response(past_question.id)
-        self.assertContains(response, past_question.question_text)
-
-    def _get_detail_view_response(self, question_id):
-        url = urls.reverse('polls:detail', args=[question_id])
-        return self.client.get(url)
 
 
 def create_question(text, publish_date=None):

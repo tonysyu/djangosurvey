@@ -1,3 +1,5 @@
+from random import randint
+
 from django import urls
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -7,25 +9,27 @@ from django.views import generic
 from .models import Choice, Question
 
 
-class IndexView(generic.ListView):
-
-    template_name = 'polls/index.html'
-    context_object_name = 'latest_question_list'
-
-    def get_queryset(self):
-        """Return the last five published questions."""
-        return Question.objects.filter(publish_date__lte=timezone.now()) \
-                               .order_by('-publish_date')[:5]
-
-
-class DetailView(generic.DetailView):
+class IndexView(generic.DetailView):
 
     model = Question
-    template_name = 'polls/details.html'
+    template_name = 'polls/index.html'
 
-    def get_queryset(self):
-        """Return detailed view of question, but error on future questions."""
-        return Question.objects.filter(publish_date__lte=timezone.now())
+    def get_object(self):
+        question_id = self._random_question_id()
+        if question_id is None:
+            return None
+        return get_object_or_404(Question, pk=question_id)
+
+    def _random_question_id(self):
+        """Return a random question.
+
+        Adapted from http://stackoverflow.com/a/6405601/260303
+        """
+        questions = Question.objects.filter(publish_date__lte=timezone.now())
+        if not questions:
+            return None
+        random_index = randint(0, len(questions) - 1)
+        return questions[random_index].id
 
 
 class ResultsView(generic.DetailView):
@@ -40,7 +44,7 @@ def vote(request, question_id):
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
+        return render(request, 'polls/index.html', {
             'question': question,
             'error_message': "You didn't select a choice.",
         })

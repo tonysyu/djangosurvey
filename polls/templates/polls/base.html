@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ site_title|default:"Django App" }}</title>
+        {% include 'polls/bootstrap.html' %}
+    </head>
+    <body>
+        {% block navigation %}
+            {% include 'polls/navigation.html' %}
+        {% endblock %}
+
+        <div class="content container">
+            <div class="row">
+
+                <div class="col-md-8">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

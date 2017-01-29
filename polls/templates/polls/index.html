@@ -1,13 +1,30 @@
-{% if latest_question_list %}
-    <ul>
-        {% for question in latest_question_list %}
-            <li>
-                <a href="{% url 'polls:detail' question.id %}">
-                    {{ question.question_text }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{% extends 'polls/base.html' %}
+
+{% block content %}
+    {% if question is not None %}
+        <h1>{{ question.question_text }}</h1>
+
+        <form action="{% url 'polls:vote' question.id %}" method="post">
+            {% csrf_token %}
+
+            {% for choice in question.choice_set.all %}
+                <input type="radio" name="choice"
+                    id="choice{{ forloop.counter }}" value="{{ choice.id}}" />
+                <label for="choice{{ forloop.counter }}">
+                    {{ choice.choice_text }}
+                </label>
+                <br />
+            {% endfor %}
+
+            <input class="btn btn-primary" type="submit" value="Vote" />
+        </form>
+
+        {% if error_message %}
+            <div class="alert alert-warning">
+                <strong>Warning!</strong> {{ error_message }}
+            </div>
+        {% endif %}
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+{% endblock %}

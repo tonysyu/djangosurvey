@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from lazysignup.decorators import allow_lazy_user
 
-from .models import Choice, Question
+from .models import Choice, Question, UserResponse
 from .utils import random_question
 
 
@@ -24,7 +24,10 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
+        UserResponse.objects.create(
+            user=request.user,
+            choice=selected_choice,
+            question=question,
+        )
         redirect_url = urls.reverse('polls:index')
         return HttpResponseRedirect(redirect_url)

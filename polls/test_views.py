@@ -11,15 +11,15 @@ class QuestionMethodTests(TestCase):
 
     def test_was_published_recently_with_recent_question(self):
         recent_question = Question(publish_date=time_from_now(hours=-1))
-        self.assertTrue(recent_question.was_published_recently())
+        assert recent_question.was_published_recently()
 
     def test_was_published_recently_with_old_question(self):
         old_question = Question(publish_date=time_from_now(days=-30))
-        self.assertFalse(old_question.was_published_recently())
+        assert not old_question.was_published_recently()
 
     def test_was_published_recently_with_future_question(self):
         future_question = Question(publish_date=time_from_now(days=30))
-        self.assertFalse(future_question.was_published_recently())
+        assert not future_question.was_published_recently()
 
 
 class QuestionViewTests(TestCase):
@@ -27,19 +27,14 @@ class QuestionViewTests(TestCase):
     def test_index_view_with_a_past_question(self):
         create_question("Past question.", time_from_now(days=-30))
         response = self._get_polls_response()
-        self.assertEqual(
-            repr(response.context['question']),
-            '<Question: Past question.>'
-        )
+        assert (repr(response.context['question'])
+                == '<Question: Past question.>')
 
     def test_index_view_with_two_past_questions(self):
         create_question("Older question.", time_from_now(days=-30))
         create_question("Recent question.", time_from_now(days=-5))
         response = self._get_polls_response()
-        self.assertIn(
-            repr(response.context['question']),
-            ['<Question: Older question.>', '<Question: Recent question.>']
-        )
+        assert response.context['question'] in Question.objects.all()
 
     def test_index_view_with_no_questions(self):
         response = self.client.get(urls.reverse('polls:index'))
@@ -56,13 +51,11 @@ class QuestionViewTests(TestCase):
         create_question("Past question.", time_from_now(days=-30))
         create_question("Future question.", time_from_now(days=30))
         response = self._get_polls_response()
-        self.assertEqual(
-            repr(response.context['question']),
-            '<Question: Past question.>'
-        )
+        assert (repr(response.context['question'])
+                == '<Question: Past question.>')
 
     def _assert_no_question(self, response):
-        self.assertContains(response, "No polls are available.")
+        assert b"No polls are available." in response.content
 
     def _get_polls_response(self):
         return self.client.get(urls.reverse('polls:index'))

@@ -4,6 +4,12 @@
 <html>
     <head>
         <title>{{ site_title|default:"Django App" }}</title>
+
+        <!--JQuery is required by Bootstrap-->
+        <script
+          src="https://code.jquery.com/jquery-3.1.1.min.js"
+          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous"></script>
         {% bootstrap_css %}
         {% bootstrap_javascript %}
     </head>

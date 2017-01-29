@@ -1,4 +1,5 @@
 django
 django-admin-bootstrapped
 django-bootstrap3
+django-lazysignup
 mysqlclient

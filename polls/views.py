@@ -1,41 +1,16 @@
-from random import randint
-
 from django import urls
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.utils import timezone
-from django.views import generic
+from lazysignup.decorators import allow_lazy_user
 
 from .models import Choice, Question
+from .utils import random_question
 
 
-class IndexView(generic.DetailView):
-
-    model = Question
-    template_name = 'polls/index.html'
-
-    def get_object(self):
-        question_id = self._random_question_id()
-        if question_id is None:
-            return None
-        return get_object_or_404(Question, pk=question_id)
-
-    def _random_question_id(self):
-        """Return a random question.
-
-        Adapted from http://stackoverflow.com/a/6405601/260303
-        """
-        questions = Question.objects.filter(publish_date__lte=timezone.now())
-        if not questions:
-            return None
-        random_index = randint(0, len(questions) - 1)
-        return questions[random_index].id
-
-
-class ResultsView(generic.DetailView):
-
-    model = Question
-    template_name = 'polls/results.html'
+@allow_lazy_user
+def index(request):
+    context = {'question': random_question()}
+    return render(request, 'polls/index.html', context)
 
 
 def vote(request, question_id):
@@ -51,5 +26,5 @@ def vote(request, question_id):
     else:
         selected_choice.votes += 1
         selected_choice.save()
-        redirect_url = urls.reverse('polls:results', args=(question.id,))
+        redirect_url = urls.reverse('polls:index')
         return HttpResponseRedirect(redirect_url)

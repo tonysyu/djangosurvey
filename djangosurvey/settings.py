@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'bootstrap3',
+    'lazysignup',
     'django_admin_bootstrapped',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -92,6 +93,12 @@ DATABASES = {
         'PORT': '3306',  # Default MySQL port
     }
 }
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'lazysignup.backends.LazySignupBackend',
+)
 
 
 # Password validation

@@ -94,7 +94,6 @@ To Do
 -----
 
 - Tests
-    - Add test suite for ResultsView
     - Exclude questions without choices (in view, maybe elsewhere)
         - Also assert question with choice(s) is published
     - Try Django's LiveServerTestCase

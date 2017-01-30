@@ -1,0 +1,16 @@
+{% extends "admin/login.html" %}
+{% load i18n %}
+
+{% block content_container %}
+<div class="main-header">
+    <h1>
+        <span class="django-admin-title">
+            <a href="{% url 'polls:index' %}" title="{% trans 'App' %}">
+                <span class="glyphicon glyphicon-play-circle"></span>
+            </a>
+            {{ site_header|default:_('Django administration') }}
+        </span>
+    </h1>
+</div>
+{{ block.super }}
+{% endblock %}

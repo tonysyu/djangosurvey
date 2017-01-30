@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import Choice, Question, UserResponse
 
 
-admin.site.site_header = "Django Survey Administration"
+admin.site.site_header = "Survey Admin"
 
 
 class ChoiceInline(admin.TabularInline):

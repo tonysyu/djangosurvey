@@ -1,7 +1,7 @@
-Django Survey App
-=================
+Django Survey Demo App
+======================
 
-Django survey app based on the [official
+Django survey demo app based on the [official
 tutorial](https://docs.djangoproject.com/en/1.10/intro/tutorial01/). Instead of
 the default sqlite database, this uses a MySQL database.
 
@@ -75,19 +75,20 @@ applies those migrations.
 Testing and conventions
 -----------------------
 
+Testing and linting are implemented using [pytest](http://doc.pytest.org/) and
+[flake8](http://flake8.pycqa.org/). Since this is not needed for the actual
+app, you'll have to run the following to install dev requirements:
+
+    $ pip install -r dev-requrements.txt
+
 Any committed code should pass all tests, which are run with
 
-    $ python manage.py test
+    $ pytest
 
 Also, all committed code should pass basic PEP8 and linting requirements,
 which is verified using:
 
     $ flake8
-
-Since this is not needed for the actual app, you'll have to run the following
-to install dev requirements:
-
-    $ pip install -r dev-requrements.txt
 
 
 To Do

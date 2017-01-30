@@ -9,7 +9,10 @@ from .utils import random_question
 
 @allow_lazy_user
 def index(request):
-    context = {'question': random_question(request.user)}
+    question = random_question(request.user)
+    context = {'question': question, 'all_answered': False}
+    if question is None:
+        context['all_answered'] = Question.objects.all().count() > 0
     return render(request, 'polls/index.html', context)
 
 

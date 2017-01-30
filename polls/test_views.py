@@ -22,17 +22,17 @@ class QuestionViewTests(TestCase):
     def test_index_view_with_no_questions(self):
         response = self.client.get(urls.reverse('polls:index'))
         self.assertEqual(response.status_code, 200)
-        self._assert_no_questions()
+        self._assert_text_in_response(b"No questions defined.")
 
-    def test_index_view_with_one_answered_questions(self):
+    def test_index_view_with_all_questions_answered(self):
         user = self._get_user()
         question, (a, b, c) = create_question_choices("Question.", 'ABC')
         create_user_response(user, a)
-        self._assert_no_questions()
+        self._assert_text_in_response(b"You've answered all questions.")
 
-    def _assert_no_questions(self):
+    def _assert_text_in_response(self, text):
         response = self._get_polls_response()
-        assert b"No unanswered questions are available." in response.content
+        assert text in response.content
 
     def _get_polls_response(self):
         return self.client.get(urls.reverse('polls:index'))

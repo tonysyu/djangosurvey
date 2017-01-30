@@ -24,7 +24,23 @@
                 <strong>Warning!</strong> {{ error_message }}
             </div>
         {% endif %}
+    {% elif all_answered %}
+        <p>
+            You've answered all questions.
+            Log in as a new guest to bias the results.
+        </p>
+        <div class="btn-group">
+            <a href="{% url 'polls:new_guest_session' %}"
+               class="btn btn-primary">
+                New Guest Session
+            </a>
+        </div>
     {% else %}
-        <p>No unanswered questions are available.</p>
+        <p>
+            No questions defined. Add new questions in
+            <a href="{% url 'admin:index' %}">
+                Survey Admin page
+            </a>.
+        </p>
     {% endif %}
 {% endblock %}

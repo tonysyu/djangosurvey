@@ -2,19 +2,27 @@
 
 {% block content %}
     {% if question is not None %}
-        <h1>{{ question.question_text }}</h1>
+        <h3>{{ question.question_text }}</h3>
 
         <form action="{% url 'polls:vote' question.id %}" method="post">
             {% csrf_token %}
 
+            <div class="row">
             {% for choice in question.choice_set.all %}
-                <input type="radio" name="choice"
-                    id="choice{{ forloop.counter }}" value="{{ choice.id}}" />
-                <label for="choice{{ forloop.counter }}">
-                    {{ choice.choice_text }}
-                </label>
-                <br />
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="radio" name="choice"
+                                   id="choice{{ forloop.counter }}"
+                                   value="{{ choice.id}}" />
+                        </span>
+                        <span class="form-control">
+                            {{ choice.choice_text }}
+                        </span>
+                    </div>
+                </div>
             {% endfor %}
+            </div>
 
             <input class="btn btn-primary" type="submit" value="Vote" />
         </form>

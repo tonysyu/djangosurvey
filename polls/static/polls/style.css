@@ -6,3 +6,7 @@
 .container .text-muted {
     margin: 20px 0;
 }
+
+.input-group {
+    margin-bottom: 10px;
+}

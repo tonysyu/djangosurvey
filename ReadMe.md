@@ -9,8 +9,7 @@ the default sqlite database, this uses a MySQL database.
 Installation
 ------------
 
-Install MySQL
-.............
+### Install MySQL
 
 - [Download MySQL](https://dev.mysql.com/downloads/mysql/) and follow
   [installation instructions](https://dev.mysql.com/doc/refman/5.7/en/installing.html).
@@ -19,8 +18,7 @@ Install MySQL
 
     export PATH="/usr/local/mysql/bin:$PATH"
 
-Initialize Database and User
-............................
+### Initialize Database and User
 
 Start a MySQL interactive session and create the database and user needed for
 this project:
@@ -44,8 +42,7 @@ actual password*.
 
 Finally, you'll need to follow the database-update instructions below to initialize the database schema.
 
-Install Python and dependencies
-...............................
+### Install Python and dependencies
 
 This tutorial was created using Python 3.6.  If you don't have a working Python
 install (or this project isn't working on your normal install), you can install

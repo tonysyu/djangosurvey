@@ -3,10 +3,10 @@
 
 {% block content_title %}
 <h1>
+    <a href="{% url 'polls:index' %}" title="{% trans 'App' %}">
+        <span class="glyphicon glyphicon-play-circle"></span>
+    </a>
     <span class="django-admin-title">
-        <a href="{% url 'polls:index' %}" title="{% trans 'App' %}">
-            <span class="glyphicon glyphicon-play-circle"></span>
-        </a>
         {{ site_header|default:_('Django administration') }}
     </span>
 </h1>

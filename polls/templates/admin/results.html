@@ -5,6 +5,9 @@
 
 {% block content_title %}
 <h1>
+    <a href="{% url 'polls:index' %}" title="{% trans 'App' %}">
+        <span class="glyphicon glyphicon-play-circle"></span>
+    </a>
     <span class="django-admin-title">Survey Admin &raquo;</span>
     Survey Results
 </h1>

@@ -13,6 +13,13 @@ def index(request):
     return render(request, 'polls/index.html', context)
 
 
+@allow_lazy_user
+def new_guest_session(request):
+    request.session.clear()
+    return HttpResponseRedirect(urls.reverse('polls:index'))
+
+
+@allow_lazy_user
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:

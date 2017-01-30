@@ -1,0 +1,25 @@
+{% extends "admin/index.html" %}
+{% load i18n static %}
+
+
+{% block content %}
+<div class="panel panel-default" id="apps">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class >{% trans "Reports" %}</th>
+            </tr>
+        </thead>
+        <tbody class="list">
+            <tr class="bg-colored">
+                <td>
+                    <a href="/admin/polls/results">
+                        {% trans "Survey Results" %}
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{{ block.super }}
+{% endblock %}

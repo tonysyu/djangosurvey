@@ -86,14 +86,3 @@ Also, all committed code should pass basic PEP8 and linting requirements,
 which is verified using:
 
     $ flake8
-
-
-To Do
------
-
-- Tests
-    - Exclude questions without choices (in view, maybe elsewhere)
-        - Also assert question with choice(s) is published
-    - Try Django's LiveServerTestCase
-    - Integrate coverage.py
-    - Check out [Testing in Django](https://docs.djangoproject.com/en/1.10/topics/testing/)

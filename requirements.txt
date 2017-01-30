@@ -1,8 +1,5 @@
 django
+bootstrap-admin
 django-bootstrap3
 django-lazysignup
 mysqlclient
-
-# Current release of django-admin-bootstrap3 has logout bug. Use github version
-# For more info, https://github.com/django-admin-bootstrapped/django-admin-bootstrapped/issues/253
-git+https://github.com/django-admin-bootstrapped/django-admin-bootstrapped.git@30380f20cc82e898754e94b5d12cacafabca01bd

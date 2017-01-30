@@ -2,7 +2,7 @@ from django import urls
 from django.test import TestCase
 
 from .models import Question
-from .testing_utils import create_question_choices
+from .testing_utils import create_question_choices, create_user_response
 
 
 class QuestionViewTests(TestCase):
@@ -22,8 +22,21 @@ class QuestionViewTests(TestCase):
     def test_index_view_with_no_questions(self):
         response = self.client.get(urls.reverse('polls:index'))
         self.assertEqual(response.status_code, 200)
+        self._assert_no_questions()
+
+    def test_index_view_with_one_answered_questions(self):
+        user = self._get_user()
+        question, (a, b, c) = create_question_choices("Question.", 'ABC')
+        create_user_response(user, a)
+        self._assert_no_questions()
+
+    def _assert_no_questions(self):
         response = self._get_polls_response()
-        assert b"No polls are available." in response.content
+        assert b"No unanswered questions are available." in response.content
 
     def _get_polls_response(self):
         return self.client.get(urls.reverse('polls:index'))
+
+    def _get_user(self):
+        response = self._get_polls_response()
+        return response.context['user']

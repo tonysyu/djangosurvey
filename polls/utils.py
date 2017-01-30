@@ -4,12 +4,14 @@ from random import randint
 from .models import Choice, Question, UserResponse
 
 
-def random_question():
-    """Return a random question.
+def random_question(user):
+    """Return a random question that the user hasn't already answered.
 
     Adapted from http://stackoverflow.com/a/6405601/260303
     """
-    questions = Question.objects.all()
+    user_responses = UserResponse.objects.filter(user__id=user.id)
+    answered_ids = set(response.question.id for response in user_responses)
+    questions = Question.objects.exclude(id__in=answered_ids)
     if not questions:
         return None
     random_index = randint(0, len(questions) - 1)

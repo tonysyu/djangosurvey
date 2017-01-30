@@ -9,7 +9,7 @@ from .utils import random_question
 
 @allow_lazy_user
 def index(request):
-    context = {'question': random_question()}
+    context = {'question': random_question(request.user)}
     return render(request, 'polls/index.html', context)
 
 

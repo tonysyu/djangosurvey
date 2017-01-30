@@ -2,19 +2,23 @@ Django Survey Demo App
 ======================
 
 Django survey demo app based on the [official
-tutorial](https://docs.djangoproject.com/en/1.10/intro/tutorial01/). Instead of
-the default sqlite database, this uses a MySQL database.
+tutorial](https://docs.djangoproject.com/en/1.10/intro/tutorial01/). In addition to the
+basic tutorial, this demo app
 
+- Replaces the default sqlite database a MySQL database (using [mysqlclient](https://pypi.python.org/pypi/mysqlclient))
+- Displays random question to a user until all questions are answered.
+- Lazily creates a user using [django-lazysignup](http://django-lazysignup.readthedocs.io/).
+- Provides a report of survey results in the admin page.
+- Uses [django-bootstrap3](https://django-bootstrap3.readthedocs.io/) and
+[bootstrap-admin](https://github.com/django-admin-bootstrap/django-admin-bootstrap) for some style.
 
 Installation
 ------------
 
 ### Install MySQL
 
-- [Download MySQL](https://dev.mysql.com/downloads/mysql/) and follow
-  [installation instructions](https://dev.mysql.com/doc/refman/5.7/en/installing.html).
-
-- Add the following to your bash profile:
+[Download MySQL](https://dev.mysql.com/downloads/mysql/) and follow
+[installation instructions](https://dev.mysql.com/doc/refman/5.7/en/installing.html). You may also need to add the following to your bash profile:
 
     export PATH="/usr/local/mysql/bin:$PATH"
 
